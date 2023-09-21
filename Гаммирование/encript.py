@@ -2,6 +2,7 @@ with open('Шифр.txt',encoding='utf-8') as file:
     text = file.read()
 with open('Гамма.txt',encoding='utf-8') as file:
     gamma = int(file.read())
+max_len = 14
 
 encript_bit_text = ''
 encript_mass = []
@@ -18,7 +19,7 @@ for i in range(0, len(text) - 13, 13):
     encript_bit_text = encript_bit_text + '0' * (64 - len(text_line)) + text_line
 
 encript_text = ''
-for i in range(0, len(encript_bit_text) - 14, 14):
-    encript_text = encript_text + chr(int(encript_bit_text[i:i+14], 2))
+for i in range(0, len(encript_bit_text) - max_len, max_len):
+    encript_text = encript_text + chr(int(encript_bit_text[i:i+max_len], 2))
 
 print(encript_text)
