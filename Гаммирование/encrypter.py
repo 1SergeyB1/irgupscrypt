@@ -23,15 +23,18 @@ for i in range(len(bit_mass)):
 
 encript_text = ''
 for i in range(0, len(bit_text)-64, 64):
-    text = "{0:b}".format(int(bit_text[i:i+64], 2) ^ gamma)
-    text = '1' + '0' * (64 - len(text)) + text
-    for j in range(0, len(text), 5):
-        encript_text = encript_text + chr(int(text[j:j + 5], 2))
+    text = "{0:b}".format(gamma ^ int(bit_text[i:i+64], 2))
+    text = '0' * (64 - len(text)) + text
+    for j in range(0, len(text), max_len):
+        simvol = text[j:j + max_len]
+        if len(simvol) < max_len:
+            simvol = simvol + '0' * (max_len - len(simvol))
+        if simvol.count('1') == 0:
+            simvol = max_len * '1'
+        encript_text = encript_text + chr(int(simvol, 2))
 
-with open('Гамма.txt', 'w') as file:
-    file.write(str(gamma))
+with open('Гамма.txt', 'w', encoding='utf-8') as file:
+    file.write(str(gamma) + '\n' + str(max_len))
 
-with open('Шифр.txt', 'w') as file:
+with open('Шифр.txt', 'w', encoding="utf-8") as file:
     file.write(encript_text)
-
-print(max_len)
